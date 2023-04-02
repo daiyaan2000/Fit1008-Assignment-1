@@ -301,8 +301,13 @@ class MyWindow(arcade.Window):
         layer: The layer being applied.
         px: x position of the brush.
         py: y position of the brush.
+
+        Complexity of this method is O(n^2)
         """
-        pass
+        for i in range(max(0, px - self.grid.brush_size), min(self.grid.rows, px + self.grid.brush_size + 1)):
+            for j in range(max(0, py - self.grid.brush_size), min(self.grid.cols, py + self.grid.brush_size + 1)):
+                if abs(i - px) + abs(j - py) <= self.grid.brush_size:
+                    self.grid.__setitem__(layer, i, j)
 
     def on_undo(self):
         """Called when an undo is requested."""
